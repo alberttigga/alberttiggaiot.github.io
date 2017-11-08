@@ -1,0 +1,118 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Getting data from a sensor</title>
+	<meta name="description" content="Simple Chat Room">
+	<meta name="author" content="Tomomi Imura  @girlie_mac">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.onoffswitch {    position: relative; width: 90px;    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;}.onoffswitch-checkbox {    display: none;}.onoffswitch-label {    display: block; overflow: hidden; cursor: pointer;    border: 2px solid #FFFFFF; border-radius: 20px;}.onoffswitch-inner {    display: block; width: 200%; margin-left: -100%;    transition: margin 0.3s ease-in 0s;}.onoffswitch-inner:before, .onoffswitch-inner:after {    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;    box-sizing: border-box;}.onoffswitch-inner:before {    content: "ON";    padding-left: 10px;    background-color: #409C53; color: #DCE66C;}.onoffswitch-inner:after {    content: "OFF";    padding-right: 10px;    background-color: #EEEEEE; color: #999999;    text-align: right;}.onoffswitch-switch {    display: block; width: 13px; margin: 8.5px;    background: #CDD4CC;    position: absolute; top: 0; bottom: 0;    right: 56px;    border: 2px solid #FFFFFF; border-radius: 20px;    transition: all 0.3s ease-in 0s; }.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {    margin-left: 0;}.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {    right: 0px; }
+
+#header {
+    background-color:#999900; 
+    background="images\background.jpg";
+    color:white;
+    text-align:left;
+    padding:5px; 
+
+
+}
+
+
+#section {
+   background-color:FFD700; height:400px;        width:429px;
+   background-image: url('C:\Users\Albert\Desktop\IOT-Project2\HTML_CENTRAL_PAGE\images\background.jpg');
+
+    float:left;
+    padding:10px;	 	 
+}
+
+h1 { color: #444; font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 300; line-height: 30px; margin: 0 0 1px; }
+h1.date { background: #fe921f; color: #ffffff; display: inline-block; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: bold; line-height: 12px; letter-spacing: 1px; margin: 0 0 30px; padding: 10px 15px 8px; text-transform: uppercase;  }
+
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;	 	 
+}
+
+body {
+    background-image: url("file:///C:/Users/Albert/Desktop/IOT-Project2/HTML_CENTRAL_PAGE/images/ledbg2.png");
+
+}
+ </style>
+</head>
+
+<body>
+
+
+<div id="header">
+<marquee behavior="scroll" direction="left"> <font color="black">LED remote control</marquee> </div>
+
+
+<div id="section">
+
+
+<h1>Publishing from web to control a LED</h1>
+	<section id="main" role="main">
+	
+
+<div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+    <label class="onoffswitch-label" for="myonoffswitch">
+	 <span class="onoffswitch-switch"></span>
+        <span class="onoffswitch-inner"></span>
+
+    </label>
+</div>
+	</section>
+</div>
+
+<div id="footer">
+Copyright © Albert
+</div>
+
+
+
+
+
+	<!-- including the latest PubNub JavaScript SDK -->
+	<script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
+	<script>
+(function() {
+
+	// DOM
+	var button = document.querySelector('input'); 
+
+	// This is the channel name you are subscribing in remote-led.py
+	var channel = 'disco';
+
+	// Init
+	var p = PUBNUB.init({
+		subscribe_key: 'sub-c-84551a9e-57ed-11e5-b316-0619f8945a4f',
+		publish_key:   'pub-c-f0d6636d-8730-46d3-a0ae-b520ac275841'
+
+	});
+
+	// Sending data
+	function disco() {
+        p.publish({
+            channel : channel, 
+            message : {led: 1}
+        });
+    }
+
+    // Click event
+	button.addEventListener('click', disco);
+
+})();
+	</script>
+	
+</body>
+</html>
